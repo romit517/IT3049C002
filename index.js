@@ -21,11 +21,14 @@ startButton.addEventListener("click", function(startButtonClickEvent){
 var computerOpt = Math.round(Math.random()*2);
 if(computerOpt === 0)  {
     computerOpt = "rock";
-}else if(computerOpt === 1)  {
-    computerOpt = "paper"
-}else{
+}   else
+    { 
+        if(computerOpt === 1)  {
+             computerOpt = "paper"
+        }else{
     computerOpt = "scissors";
-} 
+            } 
+    }
 
 gameForm.addEventListener("submit" , function(gameFormSubmitEvent){
     const userChoice = document.getElementById("userChoice").value;
@@ -39,6 +42,7 @@ gameForm.addEventListener("submit" , function(gameFormSubmitEvent){
     if(choice1 === choice2) {
       alert("The result is a tie!! Please try again...");
 }
+
 if(choice1 === "rock") {
     if(choice2 === "scissors") {
         alert("rock wins");
@@ -54,6 +58,9 @@ if(choice1 === "paper") {
             alert("scissors wins");
     }
 }
+
+}//
+    
 if(choice1 === "scissors") {
     if(choice2 === "rock") {
         alert("rock wins");
@@ -62,7 +69,6 @@ if(choice1 === "scissors") {
            alert("scissors wins");
         }
     }
-}
 }
 };
 
