@@ -5,3 +5,49 @@
 h1{
   font-style: italic;
 }
+*{
+  box-sizing: border-box;
+}
+
+body{
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.letter{
+  display: inline-block;
+  list-style: none;
+  width: 25px;
+  margin: 0 7px;
+  border-bottom: 1px solid black;
+  text-align: center;
+  color: white;
+}
+
+.current-word{
+  list-style: none;
+}
+
+.output{
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+.correct{
+  transition: all 1s ease;
+  background-color: aquamarine;
+}
+
+.error{
+  color: red;
+  opacity: 1;
+}
+
+.warning{
+  color: coral;
+  opacity: 1;
+}
+
+.win{
+  color: gold;
+  opacity: 1;
+}

@@ -4,7 +4,7 @@ var animalContainer = document.getElementById("animal-info");
 
 var btn = document.getElementById("btn");
 
-btn.addEventListener("click", function(){
+btn.addEventListener("click", function() {
 
     var ourRequest = new XMLHttpRequest();
     ourRequest.open('GET', 'https://learnwebcode.github.io/json-example/animals-' + pageCounter + '.json');
@@ -16,7 +16,7 @@ btn.addEventListener("click", function(){
         }else{
             console.log("We connected to the server, but it returned an error");
         }
-    };
+    }
     //To check for errors in your AJAX connection, it will show a message if the connection fails by calling the function.
     ourRequest.onerror = function(){
         console.log("Connection error....");
