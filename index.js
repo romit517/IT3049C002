@@ -97,8 +97,6 @@ function begin() {
     }
 };
 
-// Check from here... 
-
 
 function gameOver(win) {
     if (win) {
