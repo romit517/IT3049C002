@@ -1,55 +1,15 @@
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>IT3049C Module 4</title>
   <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Tic - Tac - Toe</title>
 </head>
-
 <body>
-
-<h1>Hangman Game</h1>
-
-<div id="welcomeScreen">
-  Welcome to our game... ! Please press the start button to begin.
-  <br/>
-  <button id="startButton">Start</button>
-</div>
-
-<div id="gameScreen" class="hidden">
-<p>
-  How do you win at Hangman???
-  <br><br><br>
-  To play Hangman, start by selecting a secret word. Next, draw a blank line 
-  for each letter of the word on a piece of paper. Then, have the other players 
-  guess letters, one at a time, to figure out the secret word. When the players 
-  guess a letter correctly, fill the letter into the corresponding blank.
-</p>
-<h2>Please enter your difficulty level...</h2>
-  <form id="gameForm">
-    <select id="userChoice">
-    <option value="easy">EASY</option>
-    <option value="med">MEDIUM</option>
-    <option value="hard">HARD</option>
-  </select>
-  <input type="submit" value="BOOM!">
-</form>
-</div>
-<div id="blanks" class="hidden">
-  <form id = "hangman">
-    <input type="text" maxlength="1" minlength="1" name="letter" id="letter" placeholder="Guess a Letter...">
-    <input id="guess" name="guess" type="submit" value="GUESS!">
-
-    <button id="restart" name="restart" type="button">RESTART</button>
-  </form>
-  <ul id="letters"></ul>
-  <p id="man"></p>
-  <p id="output" class="output"></p>
-</div>
-<canvas id="homeHangman" width="300px" height="300px"></canvas>
-
-</div>
-  <script src="index.js"></script>
+    <canvas id="tt"></canvas>
+    <p id="intro">Welcome to Tic-Tac-Toe...</p>
+    <script src="index.js"></script>
 </body>
-
 </html>
