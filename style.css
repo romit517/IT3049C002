@@ -1,7 +1,13 @@
 #intro{
   text-align: center;
+  font-size: 24pt;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+body{
+  background-attachment: fixed;
+  background-color: #f3b817;
+}
 
 .reset{
   padding: 15px 25px;

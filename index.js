@@ -1,5 +1,5 @@
 var canvas, ctx, gridSize,tileS, nextX, nextY;
-
+var score = 0;
 window.onload = function(){
     canvas = document.getElementById("tt");
     ctx = canvas.getContext("2d");
@@ -31,7 +31,6 @@ window.onload = function(){
 
 
 
-
         function draw(){
 
   
@@ -45,6 +44,7 @@ window.onload = function(){
             if(snakeX > gridSize - 1){
                 snakeX = 0;
             }
+
             if(snakeY < 0){
                 snakeY = gridSize - 1;
             }
@@ -52,18 +52,17 @@ window.onload = function(){
                 snakeY = 0;
             }
 
-            if(snakeX == preyX && snakeY == appleY){
-                tailSize++
-
+            if(snakeX == preyX && snakeY == preyY){
+                tailSize++;
+                score++;
                 preyX = Math.floor(Math.random() * gridSize);
                 preyY = Math.floor(Math.random() * gridSize);
             }
-
             ctx.fillStyle = "black";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
 
-            ctx.fillStyle = "green";
+            ctx.fillStyle = "#268ff1";
             for(var i = 0; i < snakeTrail.length; i++){
                 ctx.fillRect(
                     snakeTrail[i].x * tileS,
@@ -97,13 +96,14 @@ window.onload = function(){
                     case 38:
                         nextX = 0;
                         nextY = -1;
+                        break;
                     case 39:
                         nextX = 1;
                         nextY = 0;
                         break;
                     case 40:
                         nextX = 0;
-                        nextY = 1;
+                        nextY = +1;
                         break;
                 }
 
