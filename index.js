@@ -1,160 +1,112 @@
-let canvas = document.getElementById('tt'), 
-    ctx = canvas.getContext('2d'), 
-    intro = document.getElementById('intro'),
-    cellSize = 100,
-        map = [
-            0, 0, 0,
-            0, 0, 0, 
-            0, 0, 0,
-        ];
-        winPatterns = [
-            0b111000000, 0b000111000, 0b000000111,  //Rows
-            0b100100100, 0b010010010, 0b001001001,  //Columns
-            0b100010001, 0b001010100,    //Diagonals
-        ],
-        BLANK = 0, X = 1, O = -1,
+var canvas, ctx, gridSize,tileS, nextX, nextY;
 
-        mouse = {
-            x: -1,
-            y: -1,
-        },
-        currentPlayer = X,
-        gameOver = false;
+window.onload = function(){
+    canvas = document.getElementById("tt");
+    ctx = canvas.getContext("2d");
 
 
-canvas.width = canvas.height = 3 * cellSize;
+    document.addEventListener("keydown", keyDownEvent);
 
-canvas.addEventListener('mouseout', function(){
-    mouse.x = mouse.y = -1;
-});
+    //renders X times/second...
 
-canvas.addEventListener('mousemove', function(e){
-    let x = e.pageX - canvas.offsetLeft,
-        y = e.pageY - canvas.offsetTop;
+    var x = 8;
+    setInterval(draw, 1000 / x);
+};
 
-        mouse.x = x;
-        mouse.y = y;
+    //Game box
 
-        //console.log(getCellByCoords(x, y)); //Troubleshooting...
-});
+    gridSize = (tileS = 20); 
+    var nextX = (nextY = 0);
 
-canvas.addEventListener('click', function(e){
-    play(getCellByCoords(mouse.x, mouse.y));
-});
 
-function play(cell){
-    if (gameOver) return;
-    if(map[cell] != BLANK){
-       console.log('Position taken already...!');
-       return;
-    }
+    //Attributes for Snake...
 
-    map[cell] = currentPlayer;
+    var intitalTailSize = 2;
+    var tailSize = intitalTailSize;
+    var snakeTrail = [];
+    var snakeX = (snakeY = 10);
 
-    let winCheck = checkWinner(currentPlayer);
+    //Prey...
+    var preyX = (preyY = 15);
 
-    if (winCheck != 0) {
-        gameOver = true;
-        window.alert(((currentPlayer == X)? 'X' : 'O') + ' wins!');
-    } else if(map.indexOf(BLANK) == -1){
-        gameOver = true;
-        window.alert('TIE...!');
-    }
 
-    currentPlayer *= -1;
 
-}
 
-    function checkWinner(player){
-        let playerMapBitMask = 0;
-        for(let i = 0; i < map.length; i++){
-            playerMapBitMask <<= 1;
-            if(map[i] == player)
-                playerMapBitMask +=1;
-        }
+        function draw(){
 
-        for (let i = 0; i < winPatterns.length; i++){
-            if((playerMapBitMask & winPatterns[i]) == winPatterns[i]){
-                return winPatterns[i];
+  
+            snakeX += nextX;
+            snakeY += nextY;
+
+
+            if(snakeX < 0){
+                snakeX = gridSize - 1;
             }
-        }
-        return 0;
-    }
+            if(snakeX > gridSize - 1){
+                snakeX = 0;
+            }
+            if(snakeY < 0){
+                snakeY = gridSize - 1;
+            }
+            if(snakeY > gridSize - 1){
+                snakeY = 0;
+            }
 
-    function draw() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        drawBoard();
-        fillBoard();
-        function drawBoard()    {
-            ctx.strokeStyle = 'white';
-            ctx.lineWidth = 10;
+            if(snakeX == preyX && snakeY == appleY){
+                tailSize++
 
-            ctx.beginPath();
-            ctx.moveTo(cellSize, 0);
-            ctx.lineTo(cellSize, canvas.height);
-            ctx.stroke();
+                preyX = Math.floor(Math.random() * gridSize);
+                preyY = Math.floor(Math.random() * gridSize);
+            }
 
-            ctx.beginPath();
-            ctx.moveTo(cellSize * 2, 0);
-            ctx.lineTo(cellSize * 2, canvas.height);
-            ctx.stroke();
+            ctx.fillStyle = "black";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            ctx.beginPath();
-            ctx.moveTo(0, cellSize);
-            ctx.lineTo(canvas.width, cellSize);
-            ctx.stroke();
 
-            ctx.beginPath();
-            ctx.moveTo(0, cellSize * 2);
-            ctx.lineTo(canvas.width, cellSize * 2);
-            ctx.stroke();
-        }
+            ctx.fillStyle = "green";
+            for(var i = 0; i < snakeTrail.length; i++){
+                ctx.fillRect(
+                    snakeTrail[i].x * tileS,
+                    snakeTrail[i].y * tileS,
+                    tileS,
+                    tileS
+                );
 
-        function fillBoard()    {
-            for(let i = 0; i < map.length; i++){
-                let coords = getCellCoordinates(i);
-
-                ctx.save();
-                ctx.translate(coords.x + cellSize / 2, coords.y + cellSize / 2);
-                if(map[i] == X) {
-                    drawX();
-                }else if(map[i] == O){
-                    drawO();
+                if(snakeTrail[i].x == snakeX && snakeTrail[i].y ==snakeY){
+                    tailSize = intitalTailSize;
                 }
-                ctx.restore();
+            }
+
+            ctx.fillStyle = "red";
+            ctx.fillRect(preyX * tileS, preyY * tileS, tileS, tileS);
+
+            snakeTrail.push({ x: snakeX, y: snakeY});
+            while(snakeTrail.length > tailSize){
+                snakeTrail.shift();
             }
         }
 
-        function drawX () {
-           ctx.beginPath();
-           ctx.moveTo(-cellSize / 3, -cellSize / 3);
-           ctx.lineTo(cellSize / 3, cellSize / 3);
-           ctx.moveTo(cellSize / 3, -cellSize / 3);
-           ctx.lineTo(-cellSize / 3, cellSize / 3);
-            ctx.stroke();
-        }
+            //For input...
 
-        function drawO (){
-          ctx.beginPath();
-          ctx.arc(0 ,0, cellSize/3 , 0, Math.PI * 2);
-          ctx.stroke();  
-        }
+            function keyDownEvent(e) {
+                switch(e.keyCode){
+                    case 37:
+                        nextX = -1;
+                        nextY = 0;
+                        break;
+                    case 38:
+                        nextX = 0;
+                        nextY = -1;
+                    case 39:
+                        nextX = 1;
+                        nextY = 0;
+                        break;
+                    case 40:
+                        nextX = 0;
+                        nextY = 1;
+                        break;
+                }
 
-        requestAnimationFrame(draw);
-    }
-    function getCellCoordinates(cell){
-        let x = (cell % 3) * cellSize,
-            y = Math.floor(cell / 3) * cellSize;
-
-        return {
-            'x': x,
-            'y': y,
-        };
-    }
+            }
 
 
-function getCellByCoords (x, y){
-    return (Math.floor(x / cellSize) % 3) + Math.floor(y / cellSize) * 3;
-}
-
-draw();
