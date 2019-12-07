@@ -1,9 +1,25 @@
-#reset{
-  font-size: 1em;
-  font-family: cursive;
+#intro{
+  text-align: center;
 }
 
-body{
-  background-color: rgb(255, 102, 0);
-  color: white;
+
+.reset{
+  padding: 15px 25px;
+  font-size: 20px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #fff;
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
 }
+
+
+.reset:active{
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(3px);
+}
+
