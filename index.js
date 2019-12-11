@@ -1,5 +1,16 @@
 var canvas, ctx, gridSize,tileS, nextX, nextY;
-var score = 0;
+
+    
+    var username = prompt("Please enter your name:", "Harry Potter");
+    if (username == null || username == "") {
+      alert("Please enter your name again...")
+      var username = prompt("Please enter your name:", "Harry Potter");
+    } else {
+      var msg = "Hi, " + username;
+      alert(msg);
+    }
+    document.getElementById("name").innerHTML = msg;
+
 window.onload = function(){
     canvas = document.getElementById("tt");
     ctx = canvas.getContext("2d");
@@ -11,6 +22,8 @@ window.onload = function(){
 
     var x = 8;
     setInterval(draw, 1000 / x);
+
+
 };
 
     //Game box
@@ -54,7 +67,6 @@ window.onload = function(){
 
             if(snakeX == preyX && snakeY == preyY){
                 tailSize++;
-                score++;
                 preyX = Math.floor(Math.random() * gridSize);
                 preyY = Math.floor(Math.random() * gridSize);
             }
