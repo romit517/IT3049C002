@@ -4,6 +4,10 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+#tt{
+  outline: 5px solid rgb(255, 0, 0);
+}
+
 body{
   background-attachment: fixed;
   background-color: #f3b817;
